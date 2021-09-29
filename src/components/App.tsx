@@ -13,9 +13,11 @@ let [itemsList, setItemsList] = useState<stateType[]>([]);
 let [inputValue, setInputValue] = useState("");
 
 const blurFunc = (e: any) => {
+  if (inputValue !== "") {
   setItemsList(itemsList.concat({id: `${Date.now()}`, taskName: inputValue}));
   e.target.value = "";
   setInputValue("");
+  }
 };
 
 const deleteItem = (itemId: string) => {
