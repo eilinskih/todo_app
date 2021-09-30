@@ -31,7 +31,7 @@ function App() {
   return (
     <div className={a.App}>
       <h1>Todos</h1>
-      <TextField id="outlined-basic" label="Add todo" variant="outlined" onChange={changeFunc} value={inputValue} onBlur={e => blurFunc} />
+      <TextField id="outlined-basic" label="Add todo" variant="outlined" onChange={changeFunc} value={inputValue} onBlur={blurFunc} />
       <TaskItems deleteItem={deleteItem} itemsList={itemsList} />
     </div>
   );
