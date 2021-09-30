@@ -6,18 +6,19 @@ type propsType = {
   deleteItem: Function,
   itemsList: {
     id: string,
-    taskName: string}[]
-}
+    taskName: string
+  }[]
+};
 
 function TaskItems(props: propsType) {
   let items = props.itemsList.map(item => {
     return (
-    <Task id={item.id} key={item.id} name={item.taskName} deleteItem={props.deleteItem}/>
-    )
+      <Task id={item.id} key={item.id} name={item.taskName} deleteItem={props.deleteItem} />
+    );
   });
   return (
     <div className={t.itemsContainer}>
-    {items}
+      {items}
     </div>
   );
 }

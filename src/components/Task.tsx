@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import i from './Task.module.css';
 import { Checkbox } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -11,17 +11,17 @@ type propsType = {
 
 function Task(props: propsType) {
 
-  const onDeleteClick = (e: any) => {
+  const onDeleteClick = (e: MouseEvent) => {
     props.deleteItem(props.id)
   }
   return (
-      <div className={i.taskContainer}>
-        <div>
-          <Checkbox />
-          <span>{props.name}</span>
-        </div>  
-          <DeleteIcon className={i.delete} onClick={onDeleteClick} id={props.id}/>
+    <div className={i.taskContainer}>
+      <div>
+        <Checkbox />
+        <span>{props.name}</span>
       </div>
+      <DeleteIcon className={i.delete} onClick={onDeleteClick} id={props.id} />
+    </div>
   );
 }
 
