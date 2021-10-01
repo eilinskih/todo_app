@@ -1,26 +1,27 @@
 import React from 'react';
+
+import { IItemsList } from './tsInterfaces'
 import t from './TaskItems.module.css';
 import Task from './Task'
 
-type propsType = {
-  deleteItem: Function,
-  itemsList: {
-    id: string,
-    taskName: string
-  }[]
+
+interface propsType {
+  deleteItem: (itemId: string) => void,
+  itemsList: Array<IItemsList>
 };
 
-function TaskItems(props: propsType) {
-  let items = props.itemsList.map(item => {
+const TaskItems: (props: propsType) => JSX.Element = (props: propsType) => {
+  const items = props.itemsList.map(item => {
     return (
       <Task id={item.id} key={item.id} name={item.taskName} deleteItem={props.deleteItem} />
     );
   });
+
   return (
     <div className={t.itemsContainer}>
       {items}
     </div>
   );
-}
+};
 
 export default TaskItems;

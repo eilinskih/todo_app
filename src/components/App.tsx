@@ -1,30 +1,35 @@
-import React, { useState, FocusEvent } from 'react';
-import a from './App.module.css';
+import React, { useState, FocusEvent, ChangeEvent } from 'react';
 import { TextField } from '@material-ui/core';
-import TaskItems from './TaskItems'
 
-type stateType = {
-  id: string,
-  taskName: string
-};
+import a from './App.module.css';
+import TaskItems from './TaskItems';
+import { IHTMLInputElement, IItemsList } from './tsInterfaces';
+import { connect } from 'react-redux';
+import { addItemAC, deleteItemAC } from './../Redux/appReducer'
+import { AppStateType } from './../Redux/store'
 
-function App() {
-  let [itemsList, setItemsList] = useState<stateType[]>([]);
-  let [inputValue, setInputValue] = useState("");
+interface IAppProps {
+  appState: Array<IItemsList>
+  addItemAC: (item: IItemsList) => {type: string, taskItem: IItemsList}
+  deleteItemAC: (itemId: string) => {type: string, taskId: string}
+}
 
-  const blurFunc = (e: FocusEvent<HTMLInputElement>) => {
+const App: (props: IAppProps) => JSX.Element = (props) => {
+  const [inputValue, setInputValue] = useState<string>("");
+
+  const blurFunc = (e: FocusEvent<IHTMLInputElement>) => {
     if (inputValue !== "") {
-      setItemsList(itemsList.concat({ id: `${Date.now()}`, taskName: inputValue }));
+      props.addItemAC({ id: `${Date.now()}`, taskName: inputValue });
       e.target.value = "";
       setInputValue("");
     };
   };
 
   const deleteItem = (itemId: string) => {
-    setItemsList(itemsList.filter(item => item.id !== itemId));
+    props.deleteItemAC(itemId);
   };
 
-  const changeFunc = (e: FocusEvent<HTMLInputElement>) => {
+  const changeFunc = (e: ChangeEvent<IHTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
@@ -32,10 +37,15 @@ function App() {
     <div className={a.App}>
       <h1>Todos</h1>
       <TextField id="outlined-basic" label="Add todo" variant="outlined" onChange={changeFunc} value={inputValue} onBlur={blurFunc} />
-      <TaskItems deleteItem={deleteItem} itemsList={itemsList} />
+      <TaskItems deleteItem={deleteItem} itemsList={props.appState} />
     </div>
   );
-}
+};
 
-export default App;
+const mstp = (state: AppStateType) => ({
+  appState: state.appReducer
+})
 
+const AppContainer = connect(mstp, {addItemAC, deleteItemAC})(App)
+
+export default AppContainer;
