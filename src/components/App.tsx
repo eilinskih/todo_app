@@ -10,9 +10,9 @@ import { AppStateType } from './../Redux/store'
 
 interface IAppProps {
   appState: Array<IItemsList>
-  addItemAC: (item: IItemsList) => {type: string, taskItem: IItemsList}
-  deleteItemAC: (itemId: string) => {type: string, taskId: string}
-}
+  addItemAC: (item: IItemsList) => { type: string, taskItem: IItemsList }
+  deleteItemAC: (itemId: string) => { type: string, taskId: string }
+};
 
 const App: (props: IAppProps) => JSX.Element = (props) => {
   const [inputValue, setInputValue] = useState<string>("");
@@ -46,6 +46,6 @@ const mstp = (state: AppStateType) => ({
   appState: state.appReducer
 })
 
-const AppContainer = connect(mstp, {addItemAC, deleteItemAC})(App)
+const AppContainer = connect(mstp, { addItemAC, deleteItemAC })(App)
 
 export default AppContainer;

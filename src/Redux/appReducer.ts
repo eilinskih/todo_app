@@ -10,23 +10,23 @@ const appReducer: (state: stateType, action: ActionType) => stateType = (state =
     switch (action.type) {
         case ADD_ITEM:
             return (
-            state.concat(action.taskItem)
+                state.concat(action.taskItem)
             );
         case DELETE_ITEM:
             return (
-            state.filter(item => item.id !== action.taskId)
+                state.filter(item => item.id !== action.taskId)
             );
 
         default: return state;
     };
-};  
+};
 
-type ActionType = 
-| ReturnType<typeof addItemAC>
-| ReturnType<typeof deleteItemAC>
+type ActionType =
+    | ReturnType<typeof addItemAC>
+    | ReturnType<typeof deleteItemAC>
 
 //Action creators
-export const addItemAC = (item: IItemsList) => ({type: ADD_ITEM, taskItem: item});
-export const deleteItemAC = (itemId: string) => ({type: DELETE_ITEM, taskId: itemId});
+export const addItemAC = (item: IItemsList) => ({ type: ADD_ITEM, taskItem: item });
+export const deleteItemAC = (itemId: string) => ({ type: DELETE_ITEM, taskId: itemId });
 
 export default appReducer;

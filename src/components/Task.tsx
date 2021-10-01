@@ -7,7 +7,7 @@ import i from './Task.module.css';
 interface propsType {
   deleteItem: (itemId: string) => void,
   id: string,
-  name: string
+  taskName: string
 };
 
 const Task: (props: propsType) => JSX.Element = (props: propsType) => {
@@ -20,7 +20,7 @@ const Task: (props: propsType) => JSX.Element = (props: propsType) => {
     <div className={i.taskContainer}>
       <div>
         <Checkbox />
-        <span>{props.name}</span>
+        <span>{props.taskName}</span>
       </div>
       <DeleteIcon className={i.delete} onClick={onDeleteClick} id={props.id} />
     </div>
