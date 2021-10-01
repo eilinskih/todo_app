@@ -6,14 +6,14 @@ import TaskItems from './TaskItems';
 import { IHTMLInputElement, IItemsList } from './tsInterfaces';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemAC, deleteItemAC } from './../Redux/appReducer'
-import { AppStateType } from './../Redux/store'
+import { AppStateType, AppDispatch } from './../Redux/store'
 
 
 const App: React.FC = () => {
-  
+
   const [inputValue, setInputValue] = useState<string>("");
   const itemsList = useSelector<AppStateType, IItemsList[]>(state => state.appReducer.itemsList);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
 
   const blurFunc = (e: FocusEvent<IHTMLInputElement>) => {
     if (inputValue !== "") {
