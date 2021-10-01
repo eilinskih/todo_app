@@ -10,7 +10,7 @@ interface propsType {
   taskName: string
 };
 
-const Task: (props: propsType) => JSX.Element = (props: propsType) => {
+const Task: React.FC<propsType> = (props) => {
 
   const onDeleteClick = (e: MouseEvent) => {
     props.deleteItem(props.id);

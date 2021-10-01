@@ -3,18 +3,27 @@ import { IItemsList } from './../components/tsInterfaces';
 const ADD_ITEM = "ADD_ITEM" as const;
 const DELETE_ITEM = "DELETE_ITEM" as const;
 
-const initialState: Array<IItemsList> = []
-type stateType = typeof initialState
+const initialState: stateType = {
+    itemsList: []
+}
 
-const appReducer: (state: stateType, action: ActionType) => stateType = (state = initialState, action) => {
+type stateType = {
+    itemsList: IItemsList[]
+}
+
+const appReducer = (state = initialState, action: ActionType): stateType => {
     switch (action.type) {
         case ADD_ITEM:
             return (
-                state.concat(action.taskItem)
+                {...state, 
+                itemsList: state.itemsList.concat(action.taskItem)
+                } 
             );
         case DELETE_ITEM:
             return (
-                state.filter(item => item.id !== action.taskId)
+                {...state, 
+                itemsList: state.itemsList.filter(item => item.id !== action.taskId)
+                }
             );
 
         default: return state;
