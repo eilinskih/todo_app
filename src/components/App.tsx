@@ -1,30 +1,33 @@
-import React, { useState, FocusEvent } from 'react';
-import a from './App.module.css';
+import React, { useState, FocusEvent, ChangeEvent } from 'react';
 import { TextField } from '@material-ui/core';
-import TaskItems from './TaskItems'
 
-type stateType = {
-  id: string,
-  taskName: string
-};
+import a from './App.module.css';
+import TaskItems from './TaskItems';
+import { IHTMLInputElement, IItemsList } from './tsInterfaces';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItemAC, deleteItemAC } from './../Redux/appReducer'
+import { AppStateType, AppDispatch } from './../Redux/store'
 
-function App() {
-  let [itemsList, setItemsList] = useState<stateType[]>([]);
-  let [inputValue, setInputValue] = useState("");
 
-  const blurFunc = (e: FocusEvent<HTMLInputElement>) => {
+const App: React.FC = () => {
+
+  const [inputValue, setInputValue] = useState<string>("");
+  const itemsList = useSelector<AppStateType, IItemsList[]>(state => state.appReducer.itemsList);
+  const dispatch = useDispatch<AppDispatch>()
+
+  const blurFunc = (e: FocusEvent<IHTMLInputElement>) => {
     if (inputValue !== "") {
-      setItemsList(itemsList.concat({ id: `${Date.now()}`, taskName: inputValue }));
+      dispatch(addItemAC({ id: `${Date.now()}`, taskName: inputValue }));
       e.target.value = "";
       setInputValue("");
     };
   };
 
   const deleteItem = (itemId: string) => {
-    setItemsList(itemsList.filter(item => item.id !== itemId));
+    dispatch(deleteItemAC(itemId));
   };
 
-  const changeFunc = (e: FocusEvent<HTMLInputElement>) => {
+  const changeFunc = (e: ChangeEvent<IHTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
@@ -35,7 +38,6 @@ function App() {
       <TaskItems deleteItem={deleteItem} itemsList={itemsList} />
     </div>
   );
-}
+};
 
 export default App;
-

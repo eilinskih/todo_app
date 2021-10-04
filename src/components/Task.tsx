@@ -1,28 +1,30 @@
 import React, { MouseEvent } from 'react';
-import i from './Task.module.css';
 import { Checkbox } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-type propsType = {
-  deleteItem: Function,
-  id: string,
-  name: string
-}
+import i from './Task.module.css';
 
-function Task(props: propsType) {
+interface propsType {
+  deleteItem: (itemId: string) => void,
+  id: string,
+  taskName: string
+};
+
+const Task: React.FC<propsType> = (props) => {
 
   const onDeleteClick = (e: MouseEvent) => {
-    props.deleteItem(props.id)
-  }
+    props.deleteItem(props.id);
+  };
+
   return (
     <div className={i.taskContainer}>
       <div>
         <Checkbox />
-        <span>{props.name}</span>
+        <span>{props.taskName}</span>
       </div>
       <DeleteIcon className={i.delete} onClick={onDeleteClick} id={props.id} />
     </div>
   );
-}
+};
 
 export default Task;
